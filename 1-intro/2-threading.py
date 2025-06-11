@@ -16,14 +16,13 @@ def make_burger(student_id):
 
     print(f"[{datetime.now().strftime('%H:%M:%S')}] 4. ห่อเบอร์เกอร์...")
     time.sleep(5)
-
     print(f"[{datetime.now().strftime('%H:%M:%S')}] เสร็จแล้ว! เบอร์เกอร์ของนักเรียนคนที่ {student_id}")
 
 def main():
     start = time.time()
     
     threads = []
-    for i in range(1, 4):
+    for i in range(1, 6):
         t = threading.Thread(target=make_burger, args=(i,))
         threads.append(t)
         t.start()
