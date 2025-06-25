@@ -22,8 +22,8 @@ async def fry_eggs():  # 1
 
 async def main():  # 1
     start = time()
-    t1 = asyncio.create_task(make_coffee(), name="Task A")
-    t2 = asyncio.create_task(fry_eggs(), name="Task B")
+    t1 = asyncio.create_task(make_coffee())
+    t2 = asyncio.create_task(fry_eggs())
 
     await t1  # run task with await
     await t2
