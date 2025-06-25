@@ -1,3 +1,21 @@
 # example of starting many tasks and getting access to all tasks
+import time
+import asyncio
 
+# coroutine for task
+async def download_image(name, delay):
+    print(f"{time.ctime()} {name} loading")
+    await asyncio.sleep(delay)
+    print(f"{time.ctime()} {name} loading comple")
 
+async def main():
+    # report message
+    print(f'{time.ctime()} main coroutine started')
+    # start many task
+    started_tasks = [asyncio.create_task(download_image(i, i)) for i in range(3)]
+    # allow some of task time to start
+    await asyncio.sleep(0.1)
+    for task in started_tasks:
+        await task
+
+asyncio.run(main())
