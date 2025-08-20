@@ -1,26 +1,27 @@
 import asyncio
-import random
 
-async def read_temperature():
+async def task1():
+    print("Hello from coroutine 1")
     await asyncio.sleep(1)
-    return f"Temperature: {random.randint(20,35)} °C"
 
-async def read_humidity():
-    await asyncio.sleep(2)
-    return f"Humidity: {random.randint(40,70)} %"
+async def task2():
+    print("Hello from coroutine 2")
+    await asyncio.sleep(0.5)
+    raise Exception("Something bad happened")
 
-
-async def read_presure():
-    await asyncio.sleep(3)
-    return f"Pressure: {random.randint(900,1100)} hPa"
+async def task3():
+    print("Hello from coroutine 3")
+    await asyncio.sleep(1)
 
 async def main():
-    async with asyncio.TaskGroup() as tg:
-        t1 = tg.create_task(read_temperature())
-        t2 = tg.create_task(read_humidity())
-        t3 = tg.create_task(read_presure())
-    print(t1.result())
-    print(t2.result())
-    print(t3.result())
+    async with asyncio.TaskGroup() as group:
+        t1 = group.create_task(task1())
+        t2 = group.create_task(task2())
+        t3 = group.create_task(task3())
+        await asyncio.sleep(0.5)
+        t2.cancel()
+    print(f'Task1: done={t1.done()}, cancelled={t1.cancelled()}')
+    print(f'Task1: done={t2.done()}, cancelled={t2.cancelled()}')
+    print(f'Task1: done={t3.done()}, cancelled={t3.cancelled()}')
 
 asyncio.run(main())
