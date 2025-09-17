@@ -17,6 +17,9 @@ async def process():
     data = await fetch_data()
     print("Processing", data)
 
-tasks = [process() for _ in range(5)]
-asyncio.run(tasks)
+async def main():
+    tasks = [asyncio.create_task(process()) for _ in range(5)]
+    await asyncio.wait(tasks)
+
+asyncio.run(main())
 
