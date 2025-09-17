@@ -37,10 +37,12 @@ async def worker(id: int):
     print(f"Worker-{id} finished")
 
 async def main():
-    tasks = []
+    tasks = [asyncio.create_task(worker(i)) for i in range(1, 4)]
     
     # TODO: สร้าง asyncio task สำหรับ worker 3 ตัว
     # hint: ใช้ asyncio.create_task(worker(id))
+
+    await asyncio.gather(*tasks)
     
     # TODO: รอให้ทุก task เสร็จ
     # hint: ใช้ await หรือ asyncio.gather

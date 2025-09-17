@@ -1,10 +1,12 @@
 import time
 
-student_id = "1234567890"
+student_id = "6610301009"
 
 async def fire_rocket(name: str, t0: float):
     url = f"http://172.16.2.117:8088/fire/{student_id}"
     start_time = time.perf_counter() - t0  # เวลาเริ่มสัมพัทธ์
+
+
     """
     TODO:
     - ส่ง GET request ไปยัง rocketapp ที่ path /fire/{student_id}

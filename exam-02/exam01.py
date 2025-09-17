@@ -37,9 +37,17 @@ async def main():
     
     # TODO: สร้าง asyncio task สำหรับแต่ละ n
     # hint: ใช้ asyncio.create_task(...)
+    for n in ns:
+        tasks.append(asyncio.create_task(primes_up_to(n)))
     
     # TODO: รอ task แต่ละตัวให้เสร็จและพิมพ์ผลลัพธ์
     # hint: ใช้ await
+    count = 0
+    for i in tasks:
+        result = await i
+        print(f"Primes <= {ns[count]}: {result}")
+        count += 1
+
     pass
 
 # เรียก main
