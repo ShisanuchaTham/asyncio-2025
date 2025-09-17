@@ -41,14 +41,12 @@ async def countdown(name: str, seconds: int):
 async def main():
     timers = [("A", 3), ("B", 5), ("C", 2)]
     
-    tasks = [asyncio.create_task(countdown(name, sec)) for name, sec in timers]
     # TODO: สร้าง asyncio task สำหรับแต่ละ countdown
     # hint: ใช้ asyncio.create_task(countdown(name, sec))
-    
-    await asyncio.gather(*tasks)
+    tasks = [asyncio.create_task(countdown(name, sec)) for name, sec in timers]
     
     # TODO: รอให้ทุก task เสร็จ
     # hint: ใช้ await หรือ asyncio.gather(*tasks)
-    pass
+    await asyncio.gather(*tasks)
 
 asyncio.run(main())

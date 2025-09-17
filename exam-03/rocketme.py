@@ -26,14 +26,13 @@ async def fire_rocket(name: str, t0: float):
     
     end_time = time.perf_counter() - t0
 
-    return{
-            "name": name,
-            "start_time": start_time,
-            "time_to_target": data["time_to_target"],
-            "end_time": end_time
-          }
+    return {
+        "name": name,
+        "start_time": start_time,
+        "time_to_target": data["time_to_target"],
+        "end_time": end_time
+    }
 
-    pass
 
 async def main():
     t0 = time.perf_counter()  # เวลาเริ่มของชุด rockets
@@ -41,20 +40,22 @@ async def main():
     print("Rocket prepare to launch ...")  # แสดงตอนเริ่ม main
 
     # TODO: สร้าง task ยิง rocket 3 ลูกพร้อมกัน
-    tasks = [asyncio.create_task(fire_rocket(f"Rocket-{i+1}",t0)) for i in range(3)]
+    tasks = [asyncio.create_task(fire_rocket(f"Rocket-{i+1}", t0)) for i in range(3)]
 
     # TODO: รอให้ทุก task เสร็จและเก็บผลลัพธ์ตามลำดับ task
     results = await asyncio.gather(*tasks)
 
     # TODO: แสดงผล start_time, time_to_target, end_time ของแต่ละ rocket ตามลำดับ task
     for r in results:
-        print(f"{r['name']}|start_time:{r['start_time']:.2f}sec|time_to_target:{r['time_to_target']:.2f}sec|end_time:{r['end_time']:.2f}sec")
-        pass  # แสดงผล rocket
+        print(
+            f"{r['name']}|start_time:{r['start_time']:.2f}sec|"
+            f"time_to_target:{r['time_to_target']:.2f}sec|"
+            f"end_time:{r['end_time']:.2f}sec"
+        )
+
     # TODO: แสดงเวลารวมทั้งหมดตั้งแต่ยิงลูกแรกจนลูกสุดท้ายถึงจุดหมาย
-    t_total = 0  # คำนวณ max end_time
-    for r in results:
-        if r['end_time'] > t_total:
-            t_total = r['end_time']
+    t_total = max(r['end_time'] for r in results)
     print(f"\nTotal time for all rockets: {t_total:.2f} sec")
+
 
 asyncio.run(main())
