@@ -26,4 +26,9 @@ async def fire_rocket(student_id: str):
     - รอ random delay 1-2 วินาที ก่อนส่ง response
     - return dict {"message": ..., "time_to_target": ...}
     """
+    try:
+        if len(student_id) != 10:
+            raise HTTPException(status_code=400, detail="student ID ต้องเป็น 10 หลัก ")
+    except ValueError:
+        print("")
     pass
